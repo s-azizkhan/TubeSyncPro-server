@@ -1,6 +1,7 @@
 import { Optional } from 'sequelize';
-import { Table, Column, Model, PrimaryKey, DataType, CreatedAt, BeforeSave } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, DataType, CreatedAt, BeforeSave, HasMany } from 'sequelize-typescript';
 import bcrypt from 'bcrypt';
+import AccessToken from './AccessToken.model';
 
 interface UserAttributes {
   readonly id: string;
@@ -11,6 +12,7 @@ interface UserAttributes {
   readonly updatedAt?: Date;
   readonly deletedAt?: Date;
   verifyPassword: (inputPassword: string) => Promise<boolean>;
+  accessTokens?: AccessToken[]
 }
 export interface UserInput extends Optional<Omit<UserAttributes, 'id' | 'createdAt' | 'verifyPassword'>, 'name'> { }
 export interface UserOutput extends UserAttributes { }
@@ -68,4 +70,9 @@ export default class User extends Model<UserAttributes, UserInput> implements Us
   public async verifyPassword(inputPassword: string): Promise<boolean> {
     return await bcrypt.compare(inputPassword, this.password);
   }
+
+  // define hasMany relationship with access token
+  @HasMany(() => AccessToken)
+  accessTokens!: AccessToken[];
+
 };
