@@ -8,7 +8,7 @@ import { IGoogleProviderConfig, ProviderConfigService } from '../config/config.p
 * Class representing a Google Client Provider.
 */
 export class GoogleClientProvider {
-  private authClient: any;
+  readonly authClient: any;
   private config: IGoogleProviderConfig;
   private ytClient: any;
   private driveClient: any;

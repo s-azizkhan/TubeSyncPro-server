@@ -1,0 +1,8 @@
+type Query {
+  getYoutubeChannelList: CommonResponse
+  getYoutubeChannelVideoList(channelId: String!): CommonResponse
+}
+
+type YoutubeChannel {
+  data: JSON
+}

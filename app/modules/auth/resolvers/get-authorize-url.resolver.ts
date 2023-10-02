@@ -8,7 +8,6 @@ export const getAuthzUrl: QueryResolvers["getAuthzUrl"] = async (_, { provider }
             throw new Error('Invalid provider');
         }
         const providerClient = await new GoogleClientProvider().getGoogleAuthUrl();
-        console.log('provider :>> ', provider);
         return {
             message: "success",
             status: '200',

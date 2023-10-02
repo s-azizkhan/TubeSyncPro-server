@@ -64,11 +64,18 @@ export type Query = {
   getAuthzUrl?: Maybe<CommonResponse>;
   getGoogleAccessUrl?: Maybe<CommonResponse>;
   getUserDetail?: Maybe<UserData>;
+  getYoutubeChannelList?: Maybe<CommonResponse>;
+  getYoutubeChannelVideoList?: Maybe<CommonResponse>;
 };
 
 
 export type QueryGetAuthzUrlArgs = {
   provider: Providers;
+};
+
+
+export type QueryGetYoutubeChannelVideoListArgs = {
+  channelId: Scalars['String']['input'];
 };
 
 export type UserData = {
@@ -91,6 +98,11 @@ export type UserSignUpInput = {
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+export type YoutubeChannel = {
+  __typename?: 'YoutubeChannel';
+  data?: Maybe<Scalars['JSON']['output']>;
 };
 
 
@@ -179,6 +191,7 @@ export type ResolversTypes = {
   UserData: ResolverTypeWrapper<UserData>;
   UserSignInInput: UserSignInInput;
   UserSignUpInput: UserSignUpInput;
+  YoutubeChannel: ResolverTypeWrapper<YoutubeChannel>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -197,6 +210,7 @@ export type ResolversParentTypes = {
   UserData: UserData;
   UserSignInInput: UserSignInInput;
   UserSignUpInput: UserSignUpInput;
+  YoutubeChannel: YoutubeChannel;
 };
 
 export type IsAuthenticatedDirectiveArgs = { };
@@ -246,6 +260,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getAuthzUrl?: Resolver<Maybe<ResolversTypes['CommonResponse']>, ParentType, ContextType, RequireFields<QueryGetAuthzUrlArgs, 'provider'>>;
   getGoogleAccessUrl?: Resolver<Maybe<ResolversTypes['CommonResponse']>, ParentType, ContextType>;
   getUserDetail?: Resolver<Maybe<ResolversTypes['UserData']>, ParentType, ContextType>;
+  getYoutubeChannelList?: Resolver<Maybe<ResolversTypes['CommonResponse']>, ParentType, ContextType>;
+  getYoutubeChannelVideoList?: Resolver<Maybe<ResolversTypes['CommonResponse']>, ParentType, ContextType, RequireFields<QueryGetYoutubeChannelVideoListArgs, 'channelId'>>;
 };
 
 export type UserDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserData'] = ResolversParentTypes['UserData']> = {
@@ -256,6 +272,11 @@ export type UserDataResolvers<ContextType = any, ParentType extends ResolversPar
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DATETIME']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type YoutubeChannelResolvers<ContextType = any, ParentType extends ResolversParentTypes['YoutubeChannel'] = ResolversParentTypes['YoutubeChannel']> = {
+  data?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -270,6 +291,7 @@ export type Resolvers<ContextType = any> = {
   NotFound?: NotFoundResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   UserData?: UserDataResolvers<ContextType>;
+  YoutubeChannel?: YoutubeChannelResolvers<ContextType>;
 };
 
 export type DirectiveResolvers<ContextType = any> = {
