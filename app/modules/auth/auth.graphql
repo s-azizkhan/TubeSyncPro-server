@@ -1,0 +1,9 @@
+type Query {
+  getAuthzUrl(provider: Providers!): CommonResponse
+  getGoogleAccessUrl: CommonResponse
+}
+
+enum Providers {
+  GOOGLE
+  SELF
+}

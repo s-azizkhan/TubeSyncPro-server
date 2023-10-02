@@ -28,6 +28,7 @@ export type AuthSuccess = {
 
 export type CommonResponse = {
   __typename?: 'CommonResponse';
+  data?: Maybe<Scalars['JSON']['output']>;
   message?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
 };
@@ -53,9 +54,21 @@ export type NotFound = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
+export enum Providers {
+  Google = 'GOOGLE',
+  Self = 'SELF'
+}
+
 export type Query = {
   __typename?: 'Query';
+  getAuthzUrl?: Maybe<CommonResponse>;
+  getGoogleAccessUrl?: Maybe<CommonResponse>;
   getUserDetail?: Maybe<UserData>;
+};
+
+
+export type QueryGetAuthzUrlArgs = {
+  provider: Providers;
 };
 
 export type UserData = {
@@ -160,6 +173,7 @@ export type ResolversTypes = {
   JSON: ResolverTypeWrapper<Scalars['JSON']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   NotFound: ResolverTypeWrapper<NotFound>;
+  Providers: Providers;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   UserData: ResolverTypeWrapper<UserData>;
@@ -196,6 +210,7 @@ export type AuthSuccessResolvers<ContextType = any, ParentType extends Resolvers
 };
 
 export type CommonResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CommonResponse'] = ResolversParentTypes['CommonResponse']> = {
+  data?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -228,6 +243,8 @@ export type NotFoundResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getAuthzUrl?: Resolver<Maybe<ResolversTypes['CommonResponse']>, ParentType, ContextType, RequireFields<QueryGetAuthzUrlArgs, 'provider'>>;
+  getGoogleAccessUrl?: Resolver<Maybe<ResolversTypes['CommonResponse']>, ParentType, ContextType>;
   getUserDetail?: Resolver<Maybe<ResolversTypes['UserData']>, ParentType, ContextType>;
 };
 

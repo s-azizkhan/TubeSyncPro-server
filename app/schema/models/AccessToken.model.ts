@@ -1,21 +1,16 @@
 import { Table, Column, Model, PrimaryKey, DataType, CreatedAt, ForeignKey } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
 import User from './User.model';
-
-export enum Providers {
-  SELF = 'self',
-  GOOGLE = 'google',
-  FACEBOOK = 'facebook',
-  TWITTER = 'twitter'
-}
+import { EProviders } from '../../lib/providers';
 
 interface AccessTokenAttributes {
   readonly id: string;
   userId: string;
   accessToken: string;
   refreshToken: string;
-  provider: Providers;
+  provider: EProviders;
   expiredAt: Date;
+  data: string;
   readonly createdAt: Date;
   readonly updatedAt?: Date;
   readonly deletedAt?: Date;
@@ -63,9 +58,15 @@ export default class AccessToken extends Model<AccessTokenAttributes, AccessToke
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    defaultValue: Providers.SELF
+    defaultValue: EProviders.SELF
   })
-  provider !: Providers;
+  provider !: EProviders;
+  
+  @Column({
+    type: DataType.TEXT,
+    allowNull: true,
+  })
+  data !: string;
 
   @CreatedAt
   expiredAt!: Date;

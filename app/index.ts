@@ -12,6 +12,7 @@ import basicAuthMiddleware from './utils/basic-auth-middleware';
 import { Sequelize } from 'sequelize';
 import { GraphQLSchema } from 'graphql';
 import UserInterface from './interfaces/user.interface';
+import restRouter from './rest/rest.router';
 
 export interface GraphQlContext {
   req?: {
@@ -65,6 +66,8 @@ class Server<port extends number, GraphQLRoute extends string, SequelizeConn ext
         },
       }),
     );
+
+    this._app.use(restRouter)
 
     return this;
   }
