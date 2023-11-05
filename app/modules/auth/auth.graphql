@@ -1,0 +1,14 @@
+type Query {
+  getAuthzUrl(provider: Providers!): GetAuthzUrlResponse
+  getGoogleAccessUrl: CommonResponse
+}
+
+type GetAuthzUrlResponse{
+  message: String
+  success: Boolean
+  url: String!
+}
+enum Providers {
+  GOOGLE
+  SELF
+}
